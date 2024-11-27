@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package firefly;
+
+option java_package = "com.example.firefly.grpc";
+option java_multiple_files = true;
+
+service Firefly {
+  rpc GetPhase(PhaseRequest) returns (PhaseResponse);
+}
+
+message PhaseRequest {
+  string fireflyId = 1;
+}
+
+message PhaseResponse {
+  double phase = 1;
+}
+
