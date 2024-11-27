@@ -27,16 +27,17 @@ export class StartComponent implements OnInit,OnDestroy{
   
   running: boolean = false;
   data = new FormGroup({
-    coupling: new FormControl(0.5),
-    row: new FormControl(10),
-    column: new FormControl(10),
-    updateTime: new FormControl(1000)
+    coupling: new FormControl(0.99),
+    row: new FormControl(2),
+    column: new FormControl(2),
+    updateTime: new FormControl(100)
   });
 
   ngOnInit(): void {
       this.fireflies[0] = 0;
       this.fireflies[1] = 0;
       this.fireflies[2] = 0;
+      this.fireflies[3] = 0;
   }
 
   start(data: any): void {
@@ -46,6 +47,7 @@ export class StartComponent implements OnInit,OnDestroy{
         this.fireflies[0] = res[0];
         this.fireflies[1] = res[1];
         this.fireflies[2] = res[2];
+        this.fireflies[3] = res[3];
     }));
     this.running = true;
   }

@@ -21,15 +21,18 @@ public class MainController {
     public double[] getFireflies(@RequestParam String host,
                             @RequestParam int port1,
                             @RequestParam int port2,
-                            @RequestParam int port3){
+                            @RequestParam int port3,
+                                 @RequestParam int port4){
 
-        double[] res = new double[3];
+        double[] res = new double[4];
         FireflyClient fireflyClient1 = new FireflyClient(host, port1);
         FireflyClient fireflyClient2 = new FireflyClient(host, port2);
         FireflyClient fireflyClient3 = new FireflyClient(host, port3);
+        FireflyClient fireflyClient4 = new FireflyClient(host, port4);
         res[0] = fireflyClient1.getPhase();
         res[1] = fireflyClient2.getPhase();
         res[2] = fireflyClient3.getPhase();
+        res[3] = fireflyClient4.getPhase();
         return res;
     }
 

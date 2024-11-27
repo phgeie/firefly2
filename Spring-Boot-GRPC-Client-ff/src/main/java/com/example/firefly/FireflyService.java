@@ -14,7 +14,7 @@ public class FireflyService extends FireflyGrpc.FireflyImplBase {
     public FireflyService(String fireflyId) {
         this.fireflyId = fireflyId;
         this.phase = Math.random() * 2 * Math.PI;
-        this.omega = Math.random() * 2 * Math.PI * 50.0/1000.0;
+        this.omega = Math.random() * 2 * Math.PI * 1.0/10.0;
     }
 
 
@@ -30,8 +30,7 @@ public class FireflyService extends FireflyGrpc.FireflyImplBase {
     }
 
     public void updatePhase(FireflyClient[] neighbors) {
-        double ownPhase = this.phase;
-        double sum = ownPhase;
+        double sum = 0.0;
 
         for (FireflyClient neighbor : neighbors) {
             try {
@@ -42,8 +41,18 @@ public class FireflyService extends FireflyGrpc.FireflyImplBase {
             }
         }
 
-        this.phase += omega + K * sum / neighbors.length;
+        this.phase += omega + K * sum / 2.0;
         this.phase = (this.phase ) % (2 * Math.PI);
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
         System.out.println("Synchronisierte Phase von " + fireflyId + ": " + phase);
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
     }
 }

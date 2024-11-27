@@ -17,7 +17,6 @@
 		<grpc.version>1.42.1</grpc.version>
 	</properties>
 	<dependencies>
-
 		<dependency>
 			<groupId>net.devh</groupId>
 			<artifactId>grpc-server-spring-boot-starter</artifactId>

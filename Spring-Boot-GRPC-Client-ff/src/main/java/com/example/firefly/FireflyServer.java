@@ -33,8 +33,13 @@ public class FireflyServer {
         }));
 
         while (true) {
-            Thread.sleep(50); // 1 Sekunde warten
-            fireflyService.updatePhase(neighbors);
+            try {
+                Thread.sleep(100); // 1 Sekunde warten
+                fireflyService.updatePhase(neighbors);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                break;
+            }
         }
     }
 }
