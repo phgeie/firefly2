@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Spring-Boot-GRPC-Client-ff" />
+        <module name="Spring-Boot-GRPC-Observer" />
         <module name="Spring-Boot-GRPC-Client-Example" />
       </profile>
     </annotationProcessing>

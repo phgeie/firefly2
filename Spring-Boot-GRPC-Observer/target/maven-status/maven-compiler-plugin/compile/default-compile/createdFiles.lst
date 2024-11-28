@@ -9,14 +9,17 @@ com\example\firefly\FireflyClient.class
 com\example\firefly\grpc\FireflyGrpc$1.class
 com\example\firefly\grpc\FireflyGrpc$MethodHandlers.class
 com\example\firefly\grpc\PhaseResponseOrBuilder.class
+com\example\firefly\service\SharedObjectService.class
 com\example\firefly\grpc\FireflyGrpc$FireflyImplBase.class
 com\example\firefly\FireflyApplication.class
 com\example\firefly\grpc\PhaseRequest.class
 com\example\firefly\controller\MainController.class
 com\example\firefly\grpc\PhaseRequest$1.class
 com\example\firefly\grpc\FireflyGrpc$FireflyFutureStub.class
+com\example\firefly\FireflyService.class
 com\example\firefly\grpc\FireflyGrpc$FireflyBlockingStub.class
 com\example\firefly\grpc\PhaseRequestOrBuilder.class
+com\example\firefly\FireflyServer.class
 com\example\firefly\grpc\FireflyGrpc$FireflyFileDescriptorSupplier.class
 com\example\firefly\grpc\PhaseResponse.class
 com\example\firefly\grpc\PhaseResponse$1.class

@@ -41,14 +41,15 @@ export class StartComponent implements OnInit,OnDestroy{
   }
 
   start(data: any): void {
-      this.subscription = interval(data.updateTime).subscribe(() => 
+    this.apiService.start().subscribe(res=>{this.subscription = interval(data.updateTime).subscribe(() => 
       this.apiService.getFireflies().subscribe(res => {
         console.log(res),
         this.fireflies[0] = res[0];
         this.fireflies[1] = res[1];
         this.fireflies[2] = res[2];
         this.fireflies[3] = res[3];
-    }));
+    }));})
+      
     this.running = true;
   }
 

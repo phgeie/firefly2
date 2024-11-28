@@ -15,4 +15,8 @@ export class ApiService {
     return this.httpClient.get(BASE_URI + '/getFireflies?host=localhost&port1=50051&port2=50052&port3=50053&port4=50054');
   }
 
+  start(): Observable<any> {
+    return this.httpClient.get(BASE_URI + '/start');
+  }
+
 }

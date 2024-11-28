@@ -1,6 +1,7 @@
 package com.example.firefly.controller;
 
 import com.example.firefly.FireflyClient;
+import com.example.firefly.service.SharedObjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.*;
@@ -15,14 +16,20 @@ import java.util.*;
 @RestController // This means that this class is a Controller
 @RequestMapping(path="/data") // This means URL's start with /data (after Application path)
 public class MainController {
+    private SharedObjectService sharedObjectService;
+
+    public void setPhase(SharedObjectService sharedObjectService) {
+        this.sharedObjectService = sharedObjectService;
+    }
 
 
     @GetMapping(path="/getFireflies")
-    public double[] getFireflies(@RequestParam String host,
+    public double[] getFireflies(
+                            @RequestParam String host,
                             @RequestParam int port1,
                             @RequestParam int port2,
                             @RequestParam int port3,
-                                 @RequestParam int port4){
+                            @RequestParam int port4){
 
         double[] res = new double[4];
         FireflyClient fireflyClient1 = new FireflyClient(host, port1);
@@ -34,6 +41,13 @@ public class MainController {
         res[2] = fireflyClient3.getPhase();
         res[3] = fireflyClient4.getPhase();
         return res;
+    }
+
+    @GetMapping(path="/start")
+    public int start(){
+        System.out.println("tetstetset");
+        sharedObjectService.setPhase(-1);
+        return 0;
     }
 
 
