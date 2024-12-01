@@ -28,11 +28,13 @@ public class MainController {
 
         int rowNum = Integer.parseInt(row);
         int colNum = Integer.parseInt(col);
+        FireflyClient[] fireflyClient = new FireflyClient[rowNum * colNum];
         double[] res = new double[rowNum*colNum];
         for (int i = 0; i < rowNum * colNum; i++) {
-            FireflyClient fireflyClient = new FireflyClient("localhost", 50051+i);
-            res[i] = fireflyClient.getPhase();
+            fireflyClient[i] = new FireflyClient("localhost", 50051+i);
+            res[i] = fireflyClient[i].getPhase();
         }
+        
         return res;
     }
 

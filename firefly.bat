@@ -39,7 +39,7 @@ echo %total%
 set a=0
 
 for /l %%i in (0, 1, %total%) do (
-    timeout /t 5 /nobreak >nul
+    timeout /t 8 /nobreak >nul
     set /A PORTID=!a!+50051
     set /A a=!a!+1
     echo !PORTID!
