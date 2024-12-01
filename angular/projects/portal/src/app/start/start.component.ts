@@ -26,23 +26,33 @@ export class StartComponent implements OnInit,OnDestroy{
   fireflies: any[] = [];
   
   running: boolean = false;
-  data = new FormGroup({
-    row: new FormControl(2),
-    column: new FormControl(2),
-    updateTime: new FormControl(100)
-  });
+  row: number = 0;
+  column: number = 0;
+  zoomLevel: number = 1;
 
   ngOnInit(): void {
   }
 
-  start(data: any): void {
-    this.apiService.start().subscribe(res=>{this.subscription = interval(data.updateTime).subscribe(() => 
-      this.apiService.getFireflies(data.row, data.column).subscribe(res => {
+  start(): void {
+    this.apiService.start().subscribe(res=>{
+      console.log(res);
+      this.row = res[0];
+      this.column = res[1];
+      this.subscription = interval(res[2]).subscribe(() => 
+      this.apiService.getFireflies(res[0], res[1]).subscribe(res => {
         console.log(res),
         this.fireflies = res;
     }));})
       
     this.running = true;
+  }
+
+  zoomIn() {
+    this.zoomLevel = Math.min(this.zoomLevel + 0.1, 3); // Maximal 300%
+  }
+
+  zoomOut() {
+    this.zoomLevel = Math.max(this.zoomLevel - 0.1, 0.1); // Minimal 10%
   }
 
 

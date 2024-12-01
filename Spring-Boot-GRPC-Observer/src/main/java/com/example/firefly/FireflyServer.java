@@ -5,19 +5,16 @@ import io.grpc.Server;
 import io.grpc.ServerBuilder;
 
 public class FireflyServer {
-    private final String fireflyId;
     private final int port;
     private final FireflyService fireflyService;
 
-    public FireflyServer(String fireflyId, int port) {
-        this.fireflyId = fireflyId;
+    public FireflyServer(int port, FireflyService fireflyService) {
         this.port = port;
-        this.fireflyService = new FireflyService();
+        this.fireflyService = fireflyService;
     }
 
     public void start(SharedObjectService sharedObjectService) throws Exception {
         Server server = ServerBuilder.forPort(port).addService(fireflyService).build().start();
-        System.out.println(fireflyId + " Server gestartet auf Port " + port);
 
         Runtime.getRuntime().addShutdownHook(new Thread(server::shutdown));
 

@@ -1,57 +1,25 @@
 <div>
   <div class="collapse collapse-open bg-blue-200 border shadow-xl data">
-  <form [formGroup]="data" (ngSubmit)="start(data.value)">
-    <div class="columns-1 md:columns-5 gap-2 bg-blue-200 p-4">
-        <label class="form-control w-full max-w-xs">
-          <div class="label">
-            <span class="label-text">row</span>
-          </div>
-          <input
-            type="number"
-            class="input input-bordered w-full max-w-xs"
-            formControlName="row"
-            [readonly]="running"
-            min="1"
-          />
-        </label>
-        <label class="form-control w-full max-w-xs">
-          <div class="label">
-            <span class="label-text">column</span>
-          </div>
-          <input
-            type="number"
-            class="input input-bordered w-full max-w-xs"
-            formControlName="column"
-            [readonly]="running"
-            min="1"
-          />
-        </label>
-          <label class="form-control w-full max-w-xs">
-            <div class="label">
-              <span class="label-text">Updatetime (ms)</span>
-            </div>
-            <input
-              type="number"
-              class="input input-bordered w-full max-w-xs"
-              formControlName="updateTime"
-              [readonly]="running"
-              min="1"
-            />
-          </label>
+    <div class="bg-blue-200 p-4">
+      <div class="controls">
+        <button class="btn btn-md bg-gray-500 text-white float-left zoom-out" (click)="zoomOut()">-</button>
+        <button class="btn btn-md bg-gray-500 text-white float-left zoom-in" (click)="zoomIn()">+</button>
+      </div>
 <button
       class="btn btn-md bg-gray-500 text-white float-right"
       [disabled]="running"
+      (click)="start()"
     >
       start
     </button>
     </div>
-  </form>
   </div>
   </div>
   <div class="collapse collapse-open bg-blue-200 border shadow-xl data">
     <div class="grid-container"
-    [style.gridTemplateColumns]="'repeat(' + data.value.column + ', 1fr)'"
-    [style.gridTemplateRows]="'repeat(' + data.value.row + ', 1fr)'">
+    [style.gridTemplateColumns]="'repeat(' + column + ', 1fr)'"
+    [style.gridTemplateRows]="'repeat(' + row + ', 1fr)'"
+    [style.transform]="'scale(' + zoomLevel + ')'">
       @for (flies of fireflies; track $index) {
       <div class="grid-item">
         @if (flies > 3.14){

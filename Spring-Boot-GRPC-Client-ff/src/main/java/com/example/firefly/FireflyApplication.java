@@ -4,9 +4,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.Arrays;
+import java.util.List;
 
 @SpringBootApplication
-public class FireflyApplication {
+public class FireflyApplication extends Thread {
+
 	public static void main(String[] args) throws Exception {
 		if (args.length < 3) {
 			System.err.println("Verwendung: java FireflyApplication <fireflyId> <port> <neighbor1:port1> <neighbor2:port2> ...");
@@ -26,63 +28,59 @@ public class FireflyApplication {
 		System.out.println("myColumn: " + myColumn + ", myRow: " + myRow + ", Port: " + id);
 
 		int port = 50051 + id;
-		String[] neighbors = new String[4];
+		FireflyClient fireflyClient = new FireflyClient();
 
 		// oben
 		int neighborRow = (myRow - 1 + row) % row;
 		int neighborCol = myColumn;
-		int neighborPort = 50051 + row * neighborRow + neighborCol;
-		neighbors[0] = "localhost:" + neighborPort;
+		int neighborPort = 50051 + column * neighborRow + neighborCol;
+		fireflyClient.addNeighbor("localhost" , neighborPort);
+		System.out.println("oben: " + neighborPort);
 
 		// unten
 		neighborRow = (myRow + 1) % row;
 		neighborCol = myColumn;
-		neighborPort = 50051 + row * neighborRow + neighborCol;
-		neighbors[1] = "localhost:" + neighborPort;
+		neighborPort = 50051 + column * neighborRow + neighborCol;
+		fireflyClient.addNeighbor("localhost" , neighborPort);
+		System.out.println("unten: " + neighborPort);
 
 		// links
 		neighborRow = myRow;
 		neighborCol = (myColumn - 1 + column) % column;
-		neighborPort = 50051 + row * neighborRow + neighborCol;
-		neighbors[2] = "localhost:" + neighborPort;
+		neighborPort = 50051 + column * neighborRow + neighborCol;
+		fireflyClient.addNeighbor("localhost" , neighborPort);
+		System.out.println("links: " + neighborPort);
 
 		// rechts
 		neighborRow = myRow;
 		neighborCol = (myColumn + 1) % column;
-		neighborPort = 50051 + row * neighborRow + neighborCol;
-		neighbors[3] = "localhost:" + neighborPort;
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println("TTTTTTTTTT: " + Arrays.toString(neighbors));
-		System.out.println();
-		System.out.println();
-		System.out.println();
+		neighborPort = 50051 + column * neighborRow + neighborCol;
+		fireflyClient.addNeighbor("localhost" , neighborPort);
+		System.out.println("rechts: " + neighborPort);
 
 		double coupling = Double.parseDouble(args[3]);
 		int threadsleeptime = Integer.parseInt(args[4]);
 
-		FireflyServer server = new FireflyServer(fireflyId, port, neighbors, coupling, threadsleeptime);
 
-		FireflyClient observer = new FireflyClient("localhost",8080);
 
+
+		FireflyService service = new FireflyService(coupling, threadsleeptime, fireflyClient);
+		FireflyServer server = new FireflyServer(port, service);
+		server.start();
 		double phase = 0.0;
 		while(phase != -1){
 			try {
-				phase = observer.getPhase();
-				System.out.println();
-				System.out.println();
-				System.out.println();
-				System.out.println("Phase: " + phase);
-				System.out.println();
-				System.out.println();
-				System.out.println();
-				Thread.sleep(1000); // 1 Sekunde warten
-			} catch (Exception e) {
-
-				e.printStackTrace();
+				phase = fireflyClient.getObserver();
+				System.out.println(phase);
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+				break;
 			}
 		}
-		server.start();
+
+
+		FireflyProcess process = new FireflyProcess(service, threadsleeptime);
+		process.start();
 	}
 }

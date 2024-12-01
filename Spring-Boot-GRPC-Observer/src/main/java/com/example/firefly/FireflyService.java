@@ -6,11 +6,15 @@ import com.example.firefly.grpc.PhaseResponse;
 import com.example.firefly.service.SharedObjectService;
 import io.grpc.stub.StreamObserver;
 
+import java.util.List;
+
 public class FireflyService extends FireflyGrpc.FireflyImplBase {
     private double phase;
+    private final FireflyClient client;
 
-    public FireflyService() {
+    public FireflyService(FireflyClient client) {
         this.phase = 0.0;
+        this.client = client;
     }
 
 
@@ -21,11 +25,17 @@ public class FireflyService extends FireflyGrpc.FireflyImplBase {
         responseObserver.onCompleted();
     }
 
-    public double getPhase() {
-        return this.phase;
+    public synchronized void setPhases(SharedObjectService sharedObjectService) {
+        List<Double> neighborPhases = client.fetchNeighborPhases();
+        sharedObjectService.setPhases(neighborPhases);
+
     }
 
     public void updatePhase(SharedObjectService sharedObjectService) {
+
         this.phase = sharedObjectService.getPhase();
+        if (this.phase == -1) {
+            setPhases(sharedObjectService);
+        }
     }
 }

@@ -1,7 +1,6 @@
 com\example\firefly\grpc\FireflyOuterClass.class
 com\example\firefly\grpc\FireflyGrpc$FireflyStub.class
 com\example\firefly\grpc\PhaseRequest$Builder.class
-com\example\firefly\grpc\PhaseResponse$Builder.class
 com\example\firefly\grpc\FireflyGrpc$FireflyBaseDescriptorSupplier.class
 com\example\firefly\grpc\FireflyOuterClass$1.class
 com\example\firefly\grpc\FireflyGrpc.class
@@ -17,6 +16,7 @@ com\example\firefly\grpc\FireflyGrpc$FireflyFutureStub.class
 com\example\firefly\FireflyService.class
 com\example\firefly\grpc\FireflyGrpc$FireflyBlockingStub.class
 com\example\firefly\grpc\PhaseRequestOrBuilder.class
+com\example\firefly\FireflyProcess.class
 com\example\firefly\FireflyServer.class
 com\example\firefly\grpc\FireflyGrpc$FireflyFileDescriptorSupplier.class
 com\example\firefly\grpc\PhaseResponse.class

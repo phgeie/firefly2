@@ -24,25 +24,19 @@ public class MainController {
 
 
     @GetMapping(path="/getFireflies")
-    public double[] getFireflies(@RequestParam String row, @RequestParam String col){
+    public List<Double> getFireflies(@RequestParam String row, @RequestParam String col){
 
-        int rowNum = Integer.parseInt(row);
-        int colNum = Integer.parseInt(col);
-        FireflyClient[] fireflyClient = new FireflyClient[rowNum * colNum];
-        double[] res = new double[rowNum*colNum];
-        for (int i = 0; i < rowNum * colNum; i++) {
-            fireflyClient[i] = new FireflyClient("localhost", 50051+i);
-            res[i] = fireflyClient[i].getPhase();
-        }
-        
-        return res;
+        return sharedObjectService.getPhases();
     }
 
     @GetMapping(path="/start")
-    public int start(){
-        System.out.println("tetstetset");
+    public int[] start(){
         sharedObjectService.setPhase(-1);
-        return 0;
+        int[] rc = new int[3];
+        rc[0] = sharedObjectService.getRow();
+        rc[1] = sharedObjectService.getCol();
+        rc[2] = sharedObjectService.getTime();
+        return rc;
     }
 
 

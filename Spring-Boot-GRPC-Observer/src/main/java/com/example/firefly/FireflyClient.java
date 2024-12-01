@@ -6,22 +6,39 @@ import com.example.firefly.grpc.PhaseResponse;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class FireflyClient {
-    private final ManagedChannel channel;
-    private final FireflyGrpc.FireflyBlockingStub stub;
+    private final List<String> neighbors;
 
-    public FireflyClient(String host, int port) {
-        this.channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
-        this.stub = FireflyGrpc.newBlockingStub(channel);
+    public FireflyClient() {
+        this.neighbors = new ArrayList<>();
     }
 
-    public double getPhase() {
-        PhaseRequest request = PhaseRequest.newBuilder().setFireflyId("any").build();
-        PhaseResponse response = stub.getPhase(request);
-        return response.getPhase();
+    public void addNeighbor(String host, int port) {
+        neighbors.add(host + ":" + port);
     }
 
-    public void shutdown() {
-        channel.shutdown();
+    public List<Double> fetchNeighborPhases() {
+        List<Double> phases = new ArrayList<>();
+        System.out.println(neighbors);
+        for (String neighbor : neighbors) {
+            String[] parts = neighbor.split(":");
+            System.out.println(parts[0] + ":" + parts[1]);
+            String host = parts[0];
+            int port = Integer.parseInt(parts[1]);
+
+            ManagedChannel neighborChannel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
+            FireflyGrpc.FireflyBlockingStub neighborStub = FireflyGrpc.newBlockingStub(neighborChannel);
+
+            PhaseRequest request = PhaseRequest.newBuilder().setFireflyId("any").build();
+            PhaseResponse response = neighborStub.getPhase(request);
+            phases.add(response.getPhase());
+
+            neighborChannel.shutdown();
+
+        }
+        return phases;
     }
 }

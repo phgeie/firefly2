@@ -12,8 +12,21 @@ import org.springframework.context.annotation.Bean;
 public class FireflyApplication {
 	public static SharedObjectService sharedObjectService;
 	public static void main(String[] args) throws Exception {
-		FireflyServer server = new FireflyServer("observer", 8080);
+
+		int row = Integer.parseInt(args[0]);
+		int column = Integer.parseInt(args[1]);
+		int time = Integer.parseInt(args[2]);
+		FireflyClient fireflyClient = new FireflyClient();
+
+		for (int i=0; i< row* column; i++ ) {
+			fireflyClient.addNeighbor("localhost", 50051 + i);
+		}
+		FireflyService service = new FireflyService(fireflyClient);
+		FireflyServer server = new FireflyServer(8080, service);
 		sharedObjectService = new SharedObjectService();
+		sharedObjectService.setRow(row);
+		sharedObjectService.setCol(column);
+		sharedObjectService.setTime(time);
 		SpringApplication.run(FireflyApplication.class, args);
 		server.start(sharedObjectService);
 
@@ -26,14 +39,6 @@ public class FireflyApplication {
 
 			// Methoden des Controllers verwenden (z. B. für Tests oder Initialisierung)
 			mainController.setPhase(sharedObjectService);
-			System.out.println();
-			System.out.println();
-			System.out.println();
-			System.out.println();
-			System.out.println("TEST");
-			System.out.println();
-			System.out.println();
-			System.out.println();
 		};
 	}
 }
