@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @SpringBootApplication
-public class FireflyApplication extends Thread {
+public class FireflyApplication {
 
 	public static void main(String[] args) throws Exception {
 		if (args.length < 3) {
