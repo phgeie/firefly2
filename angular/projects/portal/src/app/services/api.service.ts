@@ -11,8 +11,8 @@ export class ApiService {
   constructor(private httpClient: HttpClient) {}
 
 
-  getFireflies(): Observable<any> {
-    return this.httpClient.get(BASE_URI + '/getFireflies?host=localhost&port1=50051&port2=50052&port3=50053&port4=50054');
+  getFireflies(row: number, col: number): Observable<any> {
+    return this.httpClient.get(BASE_URI + '/getFireflies?row=' + row + "&col=" + col);
   }
 
   start(): Observable<any> {

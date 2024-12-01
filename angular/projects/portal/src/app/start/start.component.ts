@@ -27,31 +27,24 @@ export class StartComponent implements OnInit,OnDestroy{
   
   running: boolean = false;
   data = new FormGroup({
-    coupling: new FormControl(0.99),
     row: new FormControl(2),
     column: new FormControl(2),
     updateTime: new FormControl(100)
   });
 
   ngOnInit(): void {
-      this.fireflies[0] = 0;
-      this.fireflies[1] = 0;
-      this.fireflies[2] = 0;
-      this.fireflies[3] = 0;
   }
 
   start(data: any): void {
     this.apiService.start().subscribe(res=>{this.subscription = interval(data.updateTime).subscribe(() => 
-      this.apiService.getFireflies().subscribe(res => {
+      this.apiService.getFireflies(data.row, data.column).subscribe(res => {
         console.log(res),
-        this.fireflies[0] = res[0];
-        this.fireflies[1] = res[1];
-        this.fireflies[2] = res[2];
-        this.fireflies[3] = res[3];
+        this.fireflies = res;
     }));})
       
     this.running = true;
   }
+
 
 
   ngOnDestroy(): void {

@@ -9,12 +9,13 @@ public class FireflyService extends FireflyGrpc.FireflyImplBase {
     private double phase;
     private final String fireflyId;
     private final double omega; // Eigenfrequenz des Glühwürmchens
-    private static final double K = 0.99;
+    private final double coupling;
 
-    public FireflyService(String fireflyId) {
+    public FireflyService(String fireflyId, double coupling, int threadsleeptime) {
         this.fireflyId = fireflyId;
         this.phase = Math.random() * 2 * Math.PI;
-        this.omega = Math.random() * 2 * Math.PI * 1.0/10.0;
+        this.omega = Math.random() * 2 * Math.PI * threadsleeptime/1000.0;
+        this.coupling = coupling;
     }
 
 
@@ -41,7 +42,7 @@ public class FireflyService extends FireflyGrpc.FireflyImplBase {
             }
         }
 
-        this.phase += omega + K * sum / 2.0;
+        this.phase += omega + coupling * sum / 4.0;
         this.phase = (this.phase ) % (2 * Math.PI);
         System.out.println();
         System.out.println();

@@ -8,11 +8,13 @@ public class FireflyServer {
     private final int port;
     private final FireflyService fireflyService;
     private final FireflyClient[] neighbors;
+    private final int threadsleeptime;
 
-    public FireflyServer(String fireflyId, int port, String[] neighborAddresses) {
+    public FireflyServer(String fireflyId, int port, String[] neighborAddresses, double coupling, int threadsleeptime) {
+        this.threadsleeptime = threadsleeptime;
         this.fireflyId = fireflyId;
         this.port = port;
-        this.fireflyService = new FireflyService(fireflyId);
+        this.fireflyService = new FireflyService(fireflyId, coupling, threadsleeptime);
 
         this.neighbors = new FireflyClient[neighborAddresses.length];
         for (int i = 0; i < neighborAddresses.length; i++) {
@@ -34,7 +36,7 @@ public class FireflyServer {
 
         while (true) {
             try {
-                Thread.sleep(100); // 1 Sekunde warten
+                Thread.sleep(threadsleeptime); // 1 Sekunde warten
                 fireflyService.updatePhase(neighbors);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
