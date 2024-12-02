@@ -35,12 +35,10 @@ export class StartComponent implements OnInit,OnDestroy{
 
   start(): void {
     this.apiService.start().subscribe(res=>{
-      console.log(res);
       this.row = res[0];
       this.column = res[1];
       this.subscription = interval(res[2]).subscribe(() => 
       this.apiService.getFireflies(res[0], res[1]).subscribe(res => {
-        console.log(res),
         this.fireflies = res;
     }));})
       

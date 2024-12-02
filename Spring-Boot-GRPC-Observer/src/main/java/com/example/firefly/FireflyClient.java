@@ -22,10 +22,8 @@ public class FireflyClient {
 
     public List<Double> fetchNeighborPhases() {
         List<Double> phases = new ArrayList<>();
-        System.out.println(neighbors);
         for (String neighbor : neighbors) {
             String[] parts = neighbor.split(":");
-            System.out.println(parts[0] + ":" + parts[1]);
             String host = parts[0];
             int port = Integer.parseInt(parts[1]);
 

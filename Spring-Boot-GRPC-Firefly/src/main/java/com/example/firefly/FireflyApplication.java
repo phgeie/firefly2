@@ -25,7 +25,6 @@ public class FireflyApplication {
 		}
 		int myColumn = id % column;
 		int myRow = (id - myColumn)/column;
-		System.out.println("myColumn: " + myColumn + ", myRow: " + myRow + ", Port: " + id);
 
 		int port = 50051 + id;
 		FireflyClient fireflyClient = new FireflyClient();

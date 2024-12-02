@@ -31,8 +31,8 @@ start cmd.exe /k mvn spring-boot:run -Dspring-boot.run.arguments=--grpc.server.p
 
 cd ..
 REM In das Projektverzeichnis wechseln
-cd Spring-Boot-GRPC-Client-ff || (
-    echo Fehler: Verzeichnis "Spring-Boot-GRPC-Client-ff" konnte nicht gefunden werden.
+cd Spring-Boot-GRPC-Firefly || (
+    echo Fehler: Verzeichnis "Spring-Boot-GRPC-Firefly" konnte nicht gefunden werden.
     exit /b 1
 )
 REM Server starten

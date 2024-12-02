@@ -46,6 +46,5 @@ public class SharedObjectService {
 
     public void setPhases(List<Double> phases) {
         this.phases = phases;
-        System.out.println("phases: " + phases);
     }
 }
