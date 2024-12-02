@@ -1,7 +1,10 @@
-mvn spring-boot:run -Dspring-boot.run.arguments=--grpc.server.port=50051 -Dspring-boot.run.arguments="Firefly1 50051 localhost:50052 localhost:50053"
+Benötigt:
+	- bat
+	- maven
+	- nodejs
 
-mvn spring-boot:run -Dspring-boot.run.arguments=--grpc.server.port=50052 -Dspring-boot.run.arguments="Firefly2 50052 localhost:50051 localhost:50054"
-
-mvn spring-boot:run -Dspring-boot.run.arguments=--grpc.server.port=50053 -Dspring-boot.run.arguments="Firefly3 50053 localhost:50051 localhost:50054"
-
-mvn spring-boot:run -Dspring-boot.run.arguments=--grpc.server.port=50054 -Dspring-boot.run.arguments="Firefly4 50054 localhost:50052 localhost:50053"
+Ausführung: 
+	- Führen Sie das Build-Skript firefly.bat aus	
+	- Stellen Sie Werte für die Glühwürmchen ein
+	- Öffnen Sie ein Browser-Fenster mit http://localhost:4200/start
+	- Drücken Sie auf "start"
