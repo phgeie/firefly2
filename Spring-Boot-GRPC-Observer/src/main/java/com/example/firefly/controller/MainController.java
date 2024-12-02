@@ -32,11 +32,11 @@ public class MainController {
     @GetMapping(path="/start")
     public int[] start(){
         sharedObjectService.setPhase(-1);
-        int[] rc = new int[3];
-        rc[0] = sharedObjectService.getRow();
-        rc[1] = sharedObjectService.getCol();
-        rc[2] = sharedObjectService.getTime();
-        return rc;
+        int[] rct = new int[3];
+        rct[0] = sharedObjectService.getRow();
+        rct[1] = sharedObjectService.getCol();
+        rct[2] = sharedObjectService.getTime();
+        return rct;
     }
 
 
